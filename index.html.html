@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete Java Training — Days 1–21</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8f7f4;color:#1a1a1a;display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:232px;min-width:232px;background:#fff;border-right:1px solid #e0e0d8;overflow-y:auto;flex-shrink:0;}
+.sb-head{padding:12px 14px;border-bottom:1px solid #e0e0d8;background:#1e293b;}
+.sb-head h1{font-size:13px;font-weight:700;color:#f1f5f9;}
+.sb-head p{font-size:10px;color:#94a3b8;margin-top:2px;}
+.day-lbl{padding:8px 14px 3px;font-size:9.5px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;background:#f8fafc;border-top:1px solid #f0f0eb;}
+.tbtn{width:100%;text-align:left;padding:5px 14px;font-size:12px;color:#4b5563;background:none;border:none;cursor:pointer;line-height:1.5;border-left:2px solid transparent;}
+.tbtn:hover{background:#f0f4ff;color:#1d4ed8;}
+.tbtn.active{background:#eff6ff;color:#1d4ed8;font-weight:600;border-left-color:#3b82f6;}
+.tbtn.hw{color:#7c3aed;}
+.tbtn.hw.active{background:#ede9fe;color:#6d28d9;border-left-color:#7c3aed;}
+.tbtn.new-badge::after{content:"NEW";background:#ef4444;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:6px;vertical-align:middle;}
+.main{flex:1;overflow-y:auto;background:#f8f7f4;}
+.content{max-width:800px;padding:28px 32px 60px;}
+.content h2{font-size:22px;font-weight:700;color:#111;margin-bottom:6px;}
+.tagline{font-size:13px;color:#777;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #e0e0d8;}
+.sec{margin-bottom:26px;}
+.sec h3{font-size:15px;font-weight:700;color:#111;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e8e8e4;}
+.qa{background:#fff;border:1px solid #e8e8e4;border-radius:9px;padding:16px 18px;margin-bottom:12px;}
+.q{font-size:14px;font-weight:600;color:#111;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;}
+.qn{background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;margin-top:2px;}
+.def{font-size:12.5px;font-weight:600;color:#1d4ed8;background:#eff6ff;padding:7px 11px;border-radius:5px;margin-bottom:10px;line-height:1.7;}
+.exp{font-size:13px;color:#333;line-height:1.9;}
+.exp p{margin-bottom:7px;}
+.exp ul,.exp ol{padding-left:18px;margin:5px 0 8px;}
+.exp li{margin-bottom:4px;line-height:1.8;}
+pre{background:#1e1e2e;border-radius:7px;padding:12px 14px;overflow-x:auto;margin:8px 0;}
+code{font-family:'Courier New',monospace;font-size:11.5px;color:#cdd6f4;line-height:1.8;}
+.ic{font-family:'Courier New',monospace;font-size:11.5px;background:#f0f0f0;padding:1px 5px;border-radius:3px;color:#1a1a1a;}
+.note{background:#eff6ff;border-left:3px solid #3b82f6;border-radius:0 5px 5px 0;padding:8px 12px;margin:8px 0;font-size:12.5px;color:#1d4ed8;line-height:1.7;}
+.warn{background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 5px 5px 0;padding:8px 12px;margin:8px 0;font-size:12.5px;color:#92400e;line-height:1.7;}
+.tip{background:#f0fdf4;border-left:3px solid #22c55e;border-radius:0 5px 5px 0;padding:8px 12px;margin:8px 0;font-size:12.5px;color:#166534;line-height:1.7;}
+.danger{background:#fff1f2;border-left:3px solid #ef4444;border-radius:0 5px 5px 0;padding:8px 12px;margin:8px 0;font-size:12.5px;color:#991b1b;line-height:1.7;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin:8px 0;}
+.box{background:#f8f8f8;border:1px solid #e0e0d8;border-radius:7px;padding:11px 13px;}
+.box h4{font-size:12px;font-weight:700;margin-bottom:6px;}
+.box.blue h4{color:#1d4ed8;}.box.green h4{color:#15803d;}.box.amber h4{color:#b45309;}.box.red h4{color:#b91c1c;}.box.purple h4{color:#6d28d9;}.box.gray h4{color:#374151;}
+.box ul{padding-left:14px;}.box li{font-size:11.5px;color:#333;line-height:1.8;margin-bottom:1px;}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12.5px;}
+th{background:#f1f5f9;font-weight:600;padding:7px 10px;text-align:left;border:1px solid #e0e0d8;}
+td{padding:7px 10px;border:1px solid #e0e0d8;vertical-align:top;line-height:1.7;}
+tr:nth-child(even) td{background:#fafaf8;}
+.flow{background:#f0f4ff;border:1px solid #c7d2fe;border-radius:7px;padding:11px 14px;margin:8px 0;font-size:12.5px;color:#312e81;line-height:1.95;}
+.flow strong{color:#1d4ed8;}
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
+.hc{background:#fff;border:1px solid #e0e0d8;border-radius:9px;padding:14px;cursor:pointer;}
+.hc:hover{border-color:#3b82f6;box-shadow:0 0 0 2px #dbeafe;}
+.hc h3{font-size:12.5px;font-weight:700;color:#111;margin-bottom:4px;}
+.hc p{font-size:11px;color:#777;line-height:1.5;}
+/* Homework styles */
+.hw-card{background:#fff;border:1px solid #e0e0d8;border-radius:10px;padding:18px 20px;margin-bottom:16px;}
+.hw-card h3{font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.hw-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.hw-badge.ai{background:#ede9fe;color:#6d28d9;}
+.hw-badge.no-ai{background:#fee2e2;color:#b91c1c;}
+.hw-deadline{font-size:12px;color:#ef4444;font-weight:600;margin-bottom:10px;}
+.hw-task{display:flex;gap:8px;margin:5px 0;font-size:13px;color:#333;line-height:1.7;}
+.hw-num{background:#1d4ed8;color:#fff;font-size:10px;font-weight:700;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.hw-sub{padding-left:28px;font-size:12.5px;color:#555;line-height:1.8;}
+.hw-sub li{margin-bottom:2px;}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin:2px;}
+.bb{background:#dbeafe;color:#1d4ed8;}.bg{background:#dcfce7;color:#15803d;}.br{background:#fee2e2;color:#b91c1c;}.ba{background:#fef9c3;color:#854d0e;}.bp{background:#ede9fe;color:#6d28d9;}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sb"></div>
+<div class="main" id="main"></div>
+<script>
+const D={
+
+// ═══════════════ HOME ═══════════════
+home:{label:"Home",content:()=>`<div class="content"><h2>Complete Java Training — Days 1–21</h2>
+<p class="tagline">Your complete reference: Core Java · Spring · SQL · JPA · Security · Distributed Systems · AWS · Homework Tracker</p>
+<div class="hgrid">
+<div class="hc" onclick="go('oop')"><h3>Days 1–3</h3><p>OOP · Collections · Streams · Lambdas · Modern Java</p></div>
+<div class="hc" onclick="go('threading')"><h3>Day 4 ✅ NEW</h3><p>Threading · Concurrency · CompletableFuture · ForkJoinPool</p></div>
+<div class="hc" onclick="go('jvm')"><h3>Days 5–6</h3><p>JVM · GC · Design Patterns · HTTP</p></div>
+<div class="hc" onclick="go('spring')"><h3>Days 7–9</h3><p>Spring Framework · IoC · DI · AOP · REST API</p></div>
+<div class="hc" onclick="go('reflection')"><h3>Days 10–11</h3><p>Reflection · Concurrency · Proxy Pattern</p></div>
+<div class="hc" onclick="go('sql_basics')"><h3>Days 12–14</h3><p>SQL · Joins · Window Functions · Indexes</p></div>
+<div class="hc" onclick="go('orm_jpa')"><h3>Days 15–16</h3><p>JPA · Optimistic Locking · ORM · N+1</p></div>
+<div class="hc" onclick="go('encryption')"><h3>Day 17</h3><p>Security · JWT · OAuth 2.0 · Spring Security</p></div>
+<div class="hc" onclick="go('cap')"><h3>Days 18–19</h3><p>CAP · Cassandra · MongoDB · Kafka · SAGA</p></div>
+<div class="hc" onclick="go('microservices')"><h3>Days 20–21</h3><p>Microservices · API Gateway · AWS</p></div>
+<div class="hc" onclick="go('homework')" style="border-color:#7c3aed;"><h3>📋 Homework</h3><p>HW 1–4 · Tasks · Deadlines · Requirements</p></div>
+</div></div>`},
+
+// ═══════════════ DAY 1-3 ═══════════════
+oop:{label:"Day 1 — OOP Fundamentals",content:()=>`<div class="content"><h2>OOP Fundamentals</h2><p class="tagline">Day 1 · Class · Object · State · Behavior · 4 Pillars · Polymorphism · Inheritance</p>
+<div class="sec"><h3>Class, Object, State & Behavior</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>What is a class and an object?</div><div class="def">Class = blueprint/template (no memory allocated). Object = real instance created in Heap memory using the new keyword. Each object gets its own copy of instance fields.</div>
+<pre><code>class Car {
+    String brand; int speed;          // STATE (fields)
+    void accelerate() { speed+=10; }  // BEHAVIOR (methods)
+}
+Car c = new Car(); c.brand="BMW"; c.accelerate(); // creates object in Heap</code></pre></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>The 4 OOP Pillars</div><div class="def">Encapsulation = hide data (private fields + public getters/setters). Abstraction = hide HOW it works (abstract class/interface). Inheritance = IS-A reuse (extends). Polymorphism = same name, different behavior.</div></div></div>
+
+<div class="sec"><h3>Polymorphism</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Overloading vs Overriding</div><div class="def">Overloading = same class, different param lists, compiler decides at COMPILE TIME. Overriding = child provides own version of parent method, JVM decides at RUNTIME (Dynamic Dispatch).</div>
+<pre><code>// Overloading (compile-time):
+int add(int a, int b)         { return a+b; }
+double add(double a, double b) { return a+b; }
+
+// Overriding (runtime):
+class Dog extends Animal { @Override void sound() { System.out.println("Woof"); } }
+Animal a = new Dog(); a.sound(); // "Woof" — Dog's version runs at runtime</code></pre>
+<div class="note">Overloading rules: params must differ (count/type/order). Return type alone is NOT enough. Overriding rules: same signature, cannot reduce visibility, cannot override final/static/private.</div></div></div>
+
+<div class="sec"><h3>Abstract Class vs Interface</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Key differences</div>
+<table><tr><th>Aspect</th><th>Abstract Class</th><th>Interface</th></tr>
+<tr><td>Methods</td><td>Abstract + concrete</td><td>Abstract (Java 8+: default/static)</td></tr>
+<tr><td>Fields</td><td>Any instance fields</td><td>Only constants (public static final)</td></tr>
+<tr><td>Constructor</td><td>Yes — called via super()</td><td>No</td></tr>
+<tr><td>Extend limit</td><td>ONE class only</td><td>MANY interfaces</td></tr>
+<tr><td>Use when</td><td>IS-A + shared code</td><td>CAN-DO contract</td></tr></table>
+<div class="note">Abstract class has constructor because when a subclass is created, the parent constructor runs first via super() to initialize inherited fields. The abstract class itself is never directly instantiated.</div></div></div>
+
+<div class="sec"><h3>Data Types, Strings, Keywords & Memory</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Primitives vs Wrappers vs Pass-by-Value</div><div class="def">Primitives (int/double) stored on Stack. Wrappers (Integer) = objects on Heap, default null. Java is ALWAYS pass-by-value: primitives pass a copy; objects pass a copy of the reference (can mutate fields, cannot change caller's variable to point elsewhere).</div>
+<div class="warn">Unboxing null wrapper → NullPointerException! String is immutable: for Pool sharing, security, thread safety, and hashcode caching. Use StringBuilder in loops — String + in loops = O(n²) garbage.</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>Exception Types</div><div class="def">Throwable → Error (JVM crash, don't catch) | Exception → Checked (IOException, must handle) | RuntimeException (NullPointer, optional). throw = action (throws now). throws = declaration (warns callers). finally = ALWAYS runs — use for cleanup.</div></div></div></div>`},
+
+collections:{label:"Day 2 — Collections",content:()=>`<div class="content"><h2>Collections Framework & Generics</h2><p class="tagline">Day 2 · Generics · List · Set · Queue · Map · HashMap internals · Comparable vs Comparator</p>
+<div class="sec"><h3>Collections Hierarchy & Generics</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Generics purpose</div><div class="def">Type-safe collections — compiler catches wrong types at compile time, no ClassCastException at runtime, no manual casting needed.</div></div>
+<pre><code>Collection
+├── List    — ordered, indexed, duplicates OK   → ArrayList O(1) get, LinkedList O(1) add ends
+├── Set     — NO duplicates                      → HashSet (no order), LinkedHashSet (insert order), TreeSet (sorted)
+└── Queue   — FIFO / priority                   → PriorityQueue (min-heap), ArrayDeque (both stack+queue)
+Map         — key-value pairs                    → HashMap (no order), LinkedHashMap (insert order), TreeMap (sorted)</code></pre>
+<div class="qa"><div class="q"><span class="qn">Q</span>HashMap internals (Java 8)</div><div class="def">Array of buckets. hash(key) → bucket index → if empty insert; if collision check equals() → update or chain. Java 8: chain > 8 entries → convert to Red-Black Tree (O(n) → O(log n)). Resizes at 75% load factor. Always override equals() AND hashCode() together.</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>ConcurrentModificationException & Fail-fast vs Fail-safe</div><div class="def">Thrown when modifying collection during for-each iteration. Fix: Iterator.remove() or list.removeIf(). Fail-fast (ArrayList, HashMap): throws immediately using modCount check. Fail-safe (CopyOnWriteArrayList): works on snapshot, no exception.</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>Comparable vs Comparator</div><div class="def">Comparable = inside class, compareTo(), one natural ordering, used by Collections.sort(). Comparator = external/lambda, compare(), multiple orderings possible, used by list.sort(comparator).</div></div></div></div>`},
+
+streams:{label:"Day 3 — Streams & Modern Java",content:()=>`<div class="content"><h2>Streams, Lambdas & Modern Java</h2><p class="tagline">Day 3 · Lambda · Functional Interfaces · Stream API · Optional · Java 17/21</p>
+<div class="sec"><h3>Lambda & Functional Interfaces</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Lambda + built-in interfaces</div><div class="def">Lambda = anonymous function (params) → body. Functional interface = exactly ONE abstract method. @FunctionalInterface enforces this at compile time. Java 8+ default/static methods allowed alongside the one abstract method.</div>
+<pre><code>Predicate&lt;T&gt;     — boolean test(T t)      — filtering
+Function&lt;T,R&gt;    — R apply(T t)           — transforming
+Consumer&lt;T&gt;      — void accept(T t)       — side effects (forEach)
+Supplier&lt;T&gt;      — T get()               — factory/lazy value
+BiFunction&lt;T,U,R&gt;— R apply(T t, U u)     — two inputs → one output</code></pre></div></div>
+<div class="sec"><h3>Stream API</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Intermediate (lazy) vs Terminal (eager)</div>
+<pre><code>// Intermediate — return Stream, nothing runs yet:
+.filter(n -> n > 4)   .map(String::toUpperCase)   .sorted()   .distinct()   .limit(3)   .skip(1)
+
+// Terminal — triggers pipeline, returns result:
+.collect(Collectors.toList())     .forEach(...)     .count()
+.reduce(0, Integer::sum)          .findFirst()      .anyMatch(...)
+.groupingBy(String::length)       .joining(", ")
+
+// map (1:1) vs flatMap (1:many then flatten):
+List.of(List.of(1,2),List.of(3,4)).stream().flatMap(Collection::stream).toList(); // [1,2,3,4]
+
+// stream() — sequential | parallelStream() — multi-core (NOT always faster, benchmark first)</code></pre></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>Optional</div><div class="def">Container that may or may not hold a value. Eliminates null returns and NullPointerException.</div>
+<pre><code>opt.ifPresent(s -> use(s));                    // run only if present
+opt.orElse("default");                          // default always evaluated
+opt.orElseGet(() -> compute());                 // lazy — only if empty (prefer this)
+opt.orElseThrow(() -> new NotFoundException()); // throw if empty
+opt.map(String::toUpperCase);                   // transform if present → new Optional</code></pre></div></div>
+<div class="sec"><h3>Java 17 & 21 Features</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Records, Sealed Classes, Virtual Threads</div>
+<pre><code>// Record (Java 16+) — immutable data class, auto-generates everything:
+record Point(int x, int y) {}
+Point p = new Point(3,4); p.x(); p.y(); // no manual constructor/getters/equals/hashCode
+
+// Sealed class (Java 17) — restricts which classes can extend:
+sealed class Shape permits Circle, Rectangle {}
+// Compiler knows all subtypes → exhaustive switch (no default needed)
+
+// Virtual threads (Java 21) — millions of lightweight threads:
+try (var exec = Executors.newVirtualThreadPerTaskExecutor()) {
+    IntStream.range(0,1_000_000).forEach(i -> exec.submit(() -> task(i)));
+}</code></pre></div></div></div>`},
+
+// ═══════════════ DAY 4: THREADING ═══════════════
+threading:{label:"Day 4 — Threading & Concurrency ✅",content:()=>`<div class="content"><h2>Threading & Concurrency</h2><p class="tagline">Day 4 · Thread creation · Lifecycle · Synchronization · CompletableFuture · ForkJoinPool</p>
+
+<div class="sec"><h3>Creating Threads</h3>
+<div class="qa"><div class="q"><span class="qn">Q1</span>How to create a Thread? Different ways?</div>
+<div class="def">3 main ways: (1) extend Thread class, (2) implement Runnable (recommended), (3) implement Callable (returns result), (4) Lambda (concise Runnable), (5) ExecutorService thread pool (production best practice).</div>
+<pre><code>// Way 1: Extend Thread (BAD — wastes inheritance slot)
+class MyThread extends Thread {
+    public void run() { System.out.println("Thread: " + Thread.currentThread().getName()); }
+}
+new MyThread().start();
+
+// Way 2: Implement Runnable (GOOD — can still extend another class)
+class MyTask implements Runnable {
+    public void run() { System.out.println("Runnable running"); }
+}
+Thread t = new Thread(new MyTask()); t.start();
+
+// Way 3: Lambda (CONCISE)
+Thread t = new Thread(() -> System.out.println("Lambda thread"));
+t.start();
+
+// Way 4: Callable (returns a value, can throw checked exceptions)
+Callable&lt;Integer&gt; task = () -> { return 42; };
+Future&lt;Integer&gt; future = executor.submit(task);
+int result = future.get(); // blocks until done
+
+// Way 5: ExecutorService (BEST for production)
+ExecutorService executor = Executors.newFixedThreadPool(4);
+executor.submit(() -> System.out.println("Pool thread"));
+executor.shutdown();</code></pre>
+<div class="tip">Always prefer ExecutorService over manually creating Thread objects. Thread creation is expensive — thread pools reuse threads and control concurrency.</div></div></div>
+
+<div class="sec"><h3>Thread Lifecycle</h3>
+<div class="qa"><div class="q"><span class="qn">Q2</span>Thread Lifecycle states</div>
+<div class="def">A thread moves through 6 states: NEW → RUNNABLE → RUNNING → BLOCKED/WAITING/TIMED_WAITING → TERMINATED.</div>
+<div class="flow">
+<strong>NEW</strong>: Thread t = new Thread(...) — created but not started<br>
+<strong>RUNNABLE</strong>: t.start() called — ready to run, waiting for CPU scheduler<br>
+<strong>RUNNING</strong>: CPU picked this thread — run() is executing<br>
+<strong>BLOCKED</strong>: Waiting to acquire a synchronized lock held by another thread<br>
+<strong>WAITING</strong>: wait() / join() — sleeping indefinitely until notified<br>
+<strong>TIMED_WAITING</strong>: sleep(ms) / wait(ms) / join(ms) — waiting for specified time<br>
+<strong>TERMINATED</strong>: run() completed or exception thrown — thread is dead, cannot restart
+</div>
+<pre><code>Thread t = new Thread(() -> { ... });
+System.out.println(t.getState()); // NEW
+t.start();
+System.out.println(t.getState()); // RUNNABLE or RUNNING
+t.join();                          // current thread waits for t to finish
+System.out.println(t.getState()); // TERMINATED</code></pre></div></div>
+
+<div class="sec"><h3>Runnable vs Callable</h3>
+<div class="qa"><div class="q"><span class="qn">Q3</span>Difference between Runnable and Callable</div>
+<table><tr><th>Aspect</th><th>Runnable</th><th>Callable&lt;V&gt;</th></tr>
+<tr><td>Method</td><td>void run()</td><td>V call() throws Exception</td></tr>
+<tr><td>Return value</td><td>Nothing (void)</td><td>Returns a value of type V</td></tr>
+<tr><td>Exceptions</td><td>Cannot throw checked exceptions</td><td>CAN throw checked exceptions</td></tr>
+<tr><td>Result</td><td>No Future</td><td>Returns Future&lt;V&gt; via executor.submit()</td></tr>
+<tr><td>Use when</td><td>Fire and forget task</td><td>Need result from async computation</td></tr></table></div></div>
+
+<div class="sec"><h3>Race Condition & Synchronization</h3>
+<div class="qa"><div class="q"><span class="qn">Q4–Q6</span>Race condition, synchronization, synchronized block vs method</div>
+<div class="def">Race condition = two threads access and modify shared data simultaneously without coordination → unpredictable, corrupted results. Synchronization = only one thread at a time can execute the synchronized code.</div>
+<pre><code>// RACE CONDITION — BUG:
+int count = 0;
+// Thread A: reads count=5, Thread B: reads count=5
+// Thread A: writes count=6, Thread B: writes count=6
+// Expected: count=7, Actual: count=6 → LOST UPDATE!
+
+// FIX: synchronized METHOD — locks on 'this' object:
+public synchronized void increment() { count++; } // entire method locked
+
+// FIX: synchronized BLOCK — finer-grained, better performance:
+private final Object lock = new Object();
+public void increment() {
+    synchronized(lock) { count++; }  // only this critical section locked
+    System.out.println(count);        // this line is NOT locked — runs concurrently
+}
+// Block is preferred: shorter lock duration = less contention = better throughput</code></pre>
+<div class="note">synchronized on a static method locks on the CLASS object. synchronized on an instance method locks on 'this' (the instance). They are DIFFERENT locks — concurrent access is still possible between the two!</div></div></div>
+
+<div class="sec"><h3>ReentrantLock & Volatile</h3>
+<div class="qa"><div class="q"><span class="qn">Q7–Q8</span>ReentrantLock vs synchronized, and volatile</div>
+<div class="def">ReentrantLock provides more control than synchronized: tryLock() (attempt without blocking), lockInterruptibly() (interrupt while waiting), fair lock (FIFO ordering), explicit lock/unlock. volatile guarantees VISIBILITY of changes across threads (no CPU cache) but NOT atomicity.</div>
+<pre><code>// ReentrantLock:
+private final ReentrantLock lock = new ReentrantLock(true); // fair=true → FIFO
+lock.lock();
+try { count++; } finally { lock.unlock(); } // ALWAYS unlock in finally!
+
+// tryLock — non-blocking attempt:
+if (lock.tryLock(100, TimeUnit.MILLISECONDS)) {
+    try { count++; } finally { lock.unlock(); }
+} else { System.out.println("Could not acquire lock, skipping"); }
+
+// volatile — visibility only:
+private volatile boolean running = true;  // CPU caches bypassed
+// All threads see latest value immediately
+// But: running++ is still NOT atomic with volatile! Use AtomicInteger for that.</code></pre></div></div>
+
+<div class="sec"><h3>Thread Methods: sleep, wait, yield, join</h3>
+<div class="qa"><div class="q"><span class="qn">Q10–Q12</span>sleep vs wait, yield, join, inter-thread communication</div>
+<table><tr><th>Method</th><th>Class</th><th>Releases lock?</th><th>Purpose</th></tr>
+<tr><td>sleep(ms)</td><td>Thread (static)</td><td>NO — keeps lock</td><td>Pause thread for specified time</td></tr>
+<tr><td>wait()</td><td>Object</td><td>YES — releases lock</td><td>Wait for condition (used in synchronized block)</td></tr>
+<tr><td>notify()</td><td>Object</td><td>N/A — wakes one waiter</td><td>Wake up ONE waiting thread</td></tr>
+<tr><td>notifyAll()</td><td>Object</td><td>N/A — wakes all waiters</td><td>Wake up ALL waiting threads</td></tr>
+<tr><td>yield()</td><td>Thread (static)</td><td>NO</td><td>Hint to scheduler to give other threads CPU time</td></tr>
+<tr><td>join()</td><td>Thread</td><td>N/A</td><td>Current thread waits until this thread finishes</td></tr></table>
+<pre><code>// Producer-Consumer using wait/notify (inter-thread communication):
+class SharedBuffer {
+    private int data; private boolean hasData = false;
+
+    synchronized void produce(int val) throws InterruptedException {
+        while (hasData) wait();     // wait if buffer full — releases lock!
+        data = val; hasData = true;
+        notify();                   // wake up the consumer
+    }
+    synchronized int consume() throws InterruptedException {
+        while (!hasData) wait();    // wait if buffer empty
+        hasData = false;
+        notify();                   // wake up the producer
+        return data;
+    }
+}</code></pre>
+<div class="warn">wait() MUST be called inside a synchronized block on the same object, and MUST be in a while loop (not if) to handle spurious wakeups. sleep() does NOT release the lock — other threads cannot enter synchronized code while a thread is sleeping with the lock!</div></div></div>
+
+<div class="sec"><h3>Thread Pool & ExecutorService</h3>
+<div class="qa"><div class="q"><span class="qn">Q13–Q15</span>Thread pool types, ExecutorService, submit vs execute</div>
+<div class="def">A thread pool reuses a fixed set of threads to execute tasks, avoiding the overhead of creating/destroying threads for every task.</div>
+<pre><code>// Thread pool types:
+ExecutorService fixed  = Executors.newFixedThreadPool(4);      // N threads, reused
+ExecutorService cached = Executors.newCachedThreadPool();       // grows/shrinks dynamically
+ExecutorService single = Executors.newSingleThreadExecutor();   // 1 thread, tasks queued
+ScheduledExecutorService sched = Executors.newScheduledThreadPool(2); // periodic tasks
+
+// execute() vs submit():
+executor.execute(() -> task());          // Runnable, void, no result, no checked exceptions
+Future&lt;?&gt; f = executor.submit(() -> task()); // Runnable, returns Future (can check completion)
+Future&lt;Integer&gt; f = executor.submit(() -> compute()); // Callable, returns Future with value
+
+// Always shutdown to release threads:
+executor.shutdown();              // graceful — waits for running tasks to finish
+executor.shutdownNow();           // aggressive — tries to stop running tasks
+executor.awaitTermination(30, TimeUnit.SECONDS);</code></pre>
+<div class="qa"><div class="q"><span class="qn">Q16</span>What is Future?</div>
+<div class="def">Future represents the result of an asynchronous computation. You can check if it's done (isDone()), cancel it (cancel()), or block to get the result (get()). Limitation: cannot chain operations, cannot handle exceptions cleanly — use CompletableFuture for that.</div>
+<pre><code>Future&lt;Integer&gt; f = executor.submit(() -> heavyComputation());
+// ... do other work ...
+int result = f.get();            // BLOCKS until result is ready
+int result = f.get(5, TimeUnit.SECONDS); // blocks max 5 seconds → TimeoutException if slow
+boolean done = f.isDone();       // non-blocking check
+f.cancel(true);                  // attempt to cancel</code></pre></div></div></div>
+
+<div class="sec"><h3>AtomicInteger & CAS</h3>
+<div class="qa"><div class="q"><span class="qn">Q17–Q18</span>AtomicInteger and Compare-And-Swap</div>
+<div class="def">CAS (Compare-And-Swap) is a CPU-level atomic instruction: if current value equals expected, swap to new value — all in one uninterruptible hardware operation. AtomicInteger uses CAS internally for lock-free thread-safe operations.</div>
+<pre><code>AtomicInteger counter = new AtomicInteger(0);
+counter.incrementAndGet();              // thread-safe increment, no lock needed
+counter.getAndAdd(5);                   // adds 5, returns old value
+counter.compareAndSet(10, 20);         // CAS: if value==10, set to 20 → returns boolean
+
+// HOW CAS works internally (simplified):
+// 1. Read current value from memory
+// 2. If current == expected → write new value (atomic!)
+// 3. If current != expected → retry (spin loop)
+// No lock needed — purely hardware-level atomicity
+
+// AtomicInteger is much faster than synchronized for simple counters
+// BUT: CAS spin loop wastes CPU under HIGH contention — use LongAdder in that case</code></pre></div></div>
+
+<div class="sec"><h3>Deadlock</h3>
+<div class="qa"><div class="q"><span class="qn">Q19–Q20</span>What is deadlock and how to avoid it?</div>
+<div class="def">Deadlock = two or more threads are permanently blocked, each waiting for a lock held by the other. Four conditions must ALL be true: mutual exclusion, hold and wait, no preemption, circular wait. Break any one condition to prevent deadlock.</div>
+<pre><code>// DEADLOCK example:
+Object lockA = new Object(); Object lockB = new Object();
+Thread t1 = new Thread(() -> {
+    synchronized(lockA) { sleep(100); synchronized(lockB) { /* work */ } }
+});
+Thread t2 = new Thread(() -> {
+    synchronized(lockB) { sleep(100); synchronized(lockA) { /* work */ } }
+});
+// t1 holds lockA, wants lockB. t2 holds lockB, wants lockA. DEADLOCK!
+
+// HOW TO AVOID:
+// 1. Always acquire locks in the SAME ORDER (break circular wait):
+Thread t2Fixed = new Thread(() -> {
+    synchronized(lockA) { synchronized(lockB) { /* work */ } } // same order as t1!
+});
+
+// 2. Use tryLock with timeout (ReentrantLock):
+if (lockA.tryLock(100, MILLISECONDS)) {
+    try {
+        if (lockB.tryLock(100, MILLISECONDS)) {
+            try { /* do work */ } finally { lockB.unlock(); }
+        }
+    } finally { lockA.unlock(); }
+}
+
+// 3. Reduce lock scope — hold locks for shortest time possible
+// 4. Use lock-free structures (AtomicInteger, ConcurrentHashMap)</code></pre></div></div></div>
+
+<div class="sec"><h3>CompletableFuture</h3>
+<div class="qa"><div class="q"><span class="qn">Q21–Q27</span>CompletableFuture — complete async API</div>
+<div class="def">CompletableFuture is a Future that you can complete manually, chain operations on, combine with other futures, and handle exceptions — all in a non-blocking, fluent API.</div>
+<pre><code>// runAsync() — runs Runnable, no return value:
+CompletableFuture&lt;Void&gt; cf1 = CompletableFuture.runAsync(() -> sendEmail());
+
+// supplyAsync() — runs Callable, returns value:
+CompletableFuture&lt;String&gt; cf2 = CompletableFuture.supplyAsync(() -> fetchUserName());
+
+// thenApply() — transform result (returns new CF):
+CompletableFuture&lt;Integer&gt; cf3 = cf2.thenApply(name -> name.length()); // String → Integer
+
+// thenAccept() — consume result (void, no return):
+cf2.thenAccept(name -> System.out.println("Hello " + name)); // no return value
+
+// thenCompose() — flatten nested CFs (flatMap equivalent — CHAIN dependent async ops):
+CompletableFuture&lt;Order&gt; order = fetchUser(id)
+    .thenCompose(user -> fetchOrder(user.getOrderId())); // second op depends on first result
+
+// thenCombine() — run TWO independent CFs in parallel, combine results:
+CompletableFuture&lt;String&gt; userCF  = fetchUser(id);
+CompletableFuture&lt;String&gt; orderCF = fetchOrder(orderId);
+CompletableFuture&lt;String&gt; combined = userCF.thenCombine(orderCF, (user, order) -> user + " bought " + order);
+
+// Exception handling:
+cf2.exceptionally(ex -> { log.error(ex.getMessage()); return "DEFAULT_USER"; }) // fallback
+   .handle((result, ex) -> ex != null ? "error" : result);  // handles both success and failure
+
+// get() vs join():
+cf2.get();    // throws CHECKED exceptions (InterruptedException, ExecutionException) — must catch
+cf2.join();   // throws UNCHECKED exceptions — cleaner in stream pipelines</code></pre>
+<div class="note">thenApply = map (transform value). thenAccept = forEach (consume value, no return). thenCompose = flatMap (chain async ops where second depends on first). thenCombine = zip (combine two independent async results).</div>
+<div class="tip">By default CompletableFuture uses ForkJoinPool.commonPool() for async tasks. For production, always provide your own ExecutorService as second arg: CompletableFuture.supplyAsync(() -> task(), customExecutor)</div></div></div>
+
+<div class="sec"><h3>ForkJoinPool & BlockingQueue</h3>
+<div class="qa"><div class="q"><span class="qn">Q28</span>ForkJoinPool</div>
+<div class="def">ForkJoinPool is a specialized thread pool designed for recursive divide-and-conquer tasks using the fork-join framework. It uses a work-stealing algorithm: idle threads steal tasks from busy threads' queues — maximizes CPU utilization.</div>
+<pre><code>// ForkJoinPool — for parallel recursive tasks:
+ForkJoinPool pool = ForkJoinPool.commonPool(); // shared pool, used by parallelStream() too
+
+// RecursiveTask example (sum array in parallel):
+class SumTask extends RecursiveTask&lt;Long&gt; {
+    int[] arr; int start, end;
+    SumTask(int[] arr, int start, int end) { this.arr=arr; this.start=start; this.end=end; }
+
+    protected Long compute() {
+        if (end - start &lt;= 1000) {           // base case — small enough to compute directly
+            long sum = 0;
+            for (int i = start; i &lt; end; i++) sum += arr[i];
+            return sum;
+        }
+        int mid = (start + end) / 2;
+        SumTask left  = new SumTask(arr, start, mid); left.fork();  // submit to pool
+        SumTask right = new SumTask(arr, mid, end);
+        return right.compute() + left.join();  // compute right + wait for left
+    }
+}
+Long total = pool.invoke(new SumTask(bigArray, 0, bigArray.length));</code></pre></div>
+<div class="qa"><div class="q"><span class="qn">Q29</span>BlockingQueue</div>
+<div class="def">BlockingQueue is a thread-safe queue that BLOCKS the producer when full (put() waits) and BLOCKS the consumer when empty (take() waits) — perfect for producer-consumer pattern without manual wait/notify.</div>
+<pre><code>BlockingQueue&lt;String&gt; queue = new LinkedBlockingQueue&lt;&gt;(100); // capacity 100
+
+// Producer thread:
+queue.put("task1");   // BLOCKS if queue is full — waits until space available
+
+// Consumer thread:
+String task = queue.take(); // BLOCKS if queue is empty — waits until item available
+
+// Non-blocking alternatives:
+queue.offer("task", 5, TimeUnit.SECONDS); // wait max 5s then return false
+queue.poll(5, TimeUnit.SECONDS);          // wait max 5s then return null
+
+// Types:
+ArrayBlockingQueue  — fixed capacity, backed by array
+LinkedBlockingQueue — optionally bounded, backed by linked nodes
+PriorityBlockingQueue — unbounded, priority-ordered
+SynchronousQueue   — no capacity! direct handoff: put() blocks until take() called</code></pre></div></div>
+
+<div class="sec"><h3>Quick Reference: Optimistic vs Pessimistic Locking</h3>
+<div class="qa"><div class="q"><span class="qn">Q30</span>Optimistic vs Pessimistic (see Day 15 for full JPA details)</div>
+<table><tr><th>Aspect</th><th>Optimistic</th><th>Pessimistic</th></tr>
+<tr><td>DB lock on read</td><td>NO</td><td>YES (SELECT FOR UPDATE)</td></tr>
+<tr><td>Conflict detection</td><td>At save time (version check)</td><td>At read time (blocks others)</td></tr>
+<tr><td>Performance</td><td>Better (high concurrency)</td><td>Worse (lock contention)</td></tr>
+<tr><td>Deadlock risk</td><td>None</td><td>Possible</td></tr>
+<tr><td>Best for</td><td>Read-heavy, low conflict web apps</td><td>High write contention, financial ops</td></tr>
+<tr><td>JPA</td><td>@Version on entity field</td><td>LockModeType.PESSIMISTIC_WRITE</td></tr></table></div></div></div>`},
+
+// ═══════════════ DAY 5-6 ═══════════════
+jvm:{label:"Days 5–6 — JVM & Patterns",content:()=>`<div class="content"><h2>JVM Architecture, GC & Design Patterns</h2><p class="tagline">Days 5–6 · ClassLoader · Memory Areas · JIT · GC Types · Singleton · Factory · Builder · HTTP</p>
+<div class="sec"><h3>JVM Architecture</h3>
+<div class="flow">
+<strong>Source (.java) → javac → Bytecode (.class) → ClassLoader → JVM Executes</strong><br><br>
+Key components:<br>
+1. ClassLoader: Bootstrap (JDK core) → Extension → Application (your classpath) — delegation model<br>
+2. Memory: Heap (all objects) · Stack (per-thread: locals, references) · Metaspace (class metadata) · PC Register<br>
+3. Execution Engine: Interpreter (slow, first run) + JIT (compiles hot methods to native = fast) + GC
+</div>
+<div class="qa"><div class="q"><span class="qn">Q</span>JVM Memory Areas</div>
+<table><tr><th>Area</th><th>Stores</th><th>Scope</th></tr>
+<tr><td>Heap</td><td>ALL objects (new), String Pool (Java 7+). Young Gen (Eden+S0+S1) + Old Gen</td><td>Shared all threads</td></tr>
+<tr><td>Stack</td><td>Method frames, locals, references, primitives. LIFO.</td><td>Per-thread, auto-freed</td></tr>
+<tr><td>Metaspace</td><td>Class metadata, bytecode. Replaced PermGen Java 8+. Native memory — auto-grows.</td><td>Shared</td></tr></table></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>JIT Compiler & GC Types</div>
+<div class="def">JIT: Hotspot detection → hot methods compiled to native machine code → faster execution. Minor GC: collect Young Generation (fast, frequent). Major/Full GC: collect Old Gen (slow). GC types: Serial, Parallel, G1GC (default Java 9+, region-based), ZGC (Java 11+, near-zero pause).</div></div></div>
+
+<div class="sec"><h3>Design Patterns</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Singleton, Factory, Builder, Decorator</div>
+<pre><code>// Singleton — one instance, thread-safe double-checked locking:
+private static volatile Singleton instance;
+public static Singleton getInstance() {
+    if (instance == null) { synchronized(Singleton.class) {
+        if (instance == null) instance = new Singleton(); } }
+    return instance;
+}
+
+// Factory — hides creation logic:
+Shape shape = ShapeFactory.create("CIRCLE"); // returns Circle, Square, etc.
+
+// Builder — complex object construction (immutable, readable):
+Employee emp = Employee.builder().name("Alice").salary(75000).dept("Eng").build();
+
+// Decorator — add behavior by wrapping (Java I/O streams):
+InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream("f.gz")));</code></pre></div></div>
+
+<div class="sec"><h3>HTTP Methods & Idempotency</h3>
+<table><tr><th>Method</th><th>Action</th><th>Idempotent?</th><th>Body?</th></tr>
+<tr><td>GET</td><td>Read</td><td>Yes</td><td>No</td></tr>
+<tr><td>POST</td><td>Create</td><td>No</td><td>Yes</td></tr>
+<tr><td>PUT</td><td>Replace entire resource</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>PATCH</td><td>Partial update</td><td>No</td><td>Yes</td></tr>
+<tr><td>DELETE</td><td>Delete</td><td>Yes</td><td>No</td></tr></table></div></div>`},
+
+// ═══════════════ DAYS 7-9 ═══════════════
+spring:{label:"Days 7–9 — Spring & REST",content:()=>`<div class="content"><h2>Spring Framework, Boot & REST API</h2><p class="tagline">Days 7–9 · IoC · DI · AOP · Spring Boot Auto-configuration · REST Controllers</p>
+<div class="sec"><h3>IoC, DI & Key Annotations</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>IoC & Dependency Injection</div>
+<div class="def">IoC = Spring creates/manages beans (objects) instead of you using new. DI = Spring injects dependencies automatically. Recommended: Constructor Injection (immutable, testable, required deps explicit).</div>
+<pre><code>@Service
+public class OrderService {
+    private final PaymentService paymentService;
+    public OrderService(PaymentService paymentService) { // constructor injection
+        this.paymentService = paymentService;
+    }
+}</code></pre></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>Annotation table</div>
+<table><tr><th>Annotation</th><th>Purpose</th></tr>
+<tr><td>@Component / @Service / @Repository</td><td>Generic / Business / Data layer beans</td></tr>
+<tr><td>@Controller / @RestController</td><td>MVC controller / REST JSON controller</td></tr>
+<tr><td>@Configuration + @Bean</td><td>Java config class / factory method produces bean</td></tr>
+<tr><td>@Autowired</td><td>Inject dependency (prefer constructor injection)</td></tr>
+<tr><td>@Qualifier / @Primary</td><td>Specify which bean / default bean when multiple exist</td></tr>
+<tr><td>@Value / @ConfigurationProperties</td><td>Inject property values from application.properties</td></tr></table></div></div>
+
+<div class="sec"><h3>AOP — Cross-cutting Concerns</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>AOP concepts and advice types</div>
+<div class="def">AOP separates logging/security/transaction from business logic. Aspect = the concern class. JoinPoint = where code runs (method call). Pointcut = expression selecting JoinPoints. Advice = code to run (@Before/@After/@Around/@AfterReturning/@AfterThrowing).</div>
+<pre><code>@Aspect @Component
+public class LoggingAspect {
+    @Around("execution(* com.app.service.*.*(..))")
+    public Object log(ProceedingJoinPoint pjp) throws Throwable {
+        long start = System.currentTimeMillis();
+        Object result = pjp.proceed();      // calls actual method
+        log.info("{}ms elapsed", System.currentTimeMillis() - start);
+        return result;
+    }
+}</code></pre></div></div>
+
+<div class="sec"><h3>Spring Boot & REST API</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Spring MVC request flow</div>
+<div class="flow">
+HTTP → DispatcherServlet → HandlerMapping → Controller method → Service → Repository → DB<br>
+← ResponseEntity ← @ResponseBody (Jackson JSON) ← Controller ← DispatcherServlet ← HTTP Response
+</div></div>
+<pre><code>@RestController @RequestMapping("/api/employees")
+public class EmployeeController {
+    @GetMapping("/{id}")    ResponseEntity&lt;Employee&gt; get(@PathVariable Long id) {...}
+    @GetMapping             List&lt;Employee&gt; getAll(@RequestParam(required=false) String dept) {...}
+    @PostMapping            ResponseEntity&lt;?&gt; create(@RequestBody @Valid EmployeeDTO dto) {...}
+    @PutMapping("/{id}")    Employee update(@PathVariable Long id, @RequestBody EmployeeDTO dto) {...}
+    @PatchMapping("/{id}")  Employee patch(@PathVariable Long id, @RequestBody Map&lt;?,?&gt; changes) {...}
+    @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) void delete(@PathVariable Long id) {...}
+}</code></pre></div></div>`},
+
+// ═══════════════ DAYS 10-11 ═══════════════
+reflection:{label:"Days 10–11 — Reflection & Concurrency",content:()=>`<div class="content"><h2>Reflection, Concurrency & Proxy</h2><p class="tagline">Days 10–11 · Reflection · Volatile vs Synchronized · Locks · AtomicInteger · Proxy</p>
+<div class="sec"><h3>Reflection</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>What is Reflection?</div><div class="def">Inspect/manipulate classes, methods, fields at RUNTIME. Spring uses it for DI, AOP, @Transactional, Jackson. getMethods() = all PUBLIC (including inherited). getDeclaredMethods() = all methods in THIS class (any visibility).</div>
+<pre><code>Class&lt;?&gt; c = Class.forName("com.app.Employee");
+Object obj = c.getDeclaredConstructor().newInstance();
+Field f = c.getDeclaredField("salary");
+f.setAccessible(true);  // bypasses private — dangerous in prod!
+f.set(obj, 75000.0);</code></pre></div></div>
+
+<div class="sec"><h3>Java Memory Model & Synchronization</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Visibility problem, volatile, synchronized</div><div class="def">Visibility problem: changes by Thread A to a variable may not be seen by Thread B immediately (CPU cache). volatile fixes visibility (forces CPU to flush/read from main memory). synchronized fixes both visibility AND atomicity.</div>
+<pre><code>volatile boolean running = true;    // visibility only — changes seen immediately
+// But: running++ is NOT atomic even with volatile!
+
+synchronized void increment() { count++; }  // visibility + atomicity
+
+// ReentrantLock — more control:
+ReentrantLock lock = new ReentrantLock(true); // fair mode
+lock.lock(); try { count++; } finally { lock.unlock(); } // ALWAYS in finally!</code></pre></div></div>
+
+<div class="sec"><h3>Proxy Pattern</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Dynamic Proxy (how Spring AOP works)</div><div class="def">Spring wraps your beans with JDK Dynamic Proxy (interface-based) or CGLIB (class-based). When you call a @Transactional method, you're actually calling the proxy which runs the advice (@Before/@After) then delegates to your real method.</div>
+<pre><code>// JDK Dynamic Proxy (Spring uses for @Transactional beans):
+Object proxy = Proxy.newProxyInstance(target.getClass().getClassLoader(),
+    target.getClass().getInterfaces(),
+    (proxyObj, method, args) -> {
+        // open transaction
+        Object result = method.invoke(target, args); // call real method
+        // commit transaction
+        return result;
+    });</code></pre></div></div></div>`},
+
+// ═══════════════ DAYS 12-14 ═══════════════
+sql_basics:{label:"Days 12–14 — SQL",content:()=>`<div class="content"><h2>SQL — Basics to Advanced</h2><p class="tagline">Days 12–14 · Queries · Joins · Window Functions · Indexes · B+Tree · ACID</p>
+<div class="sec"><h3>Core SQL</h3>
+<pre><code>-- SELECT, WHERE, ORDER BY, LIMIT:
+SELECT name, salary FROM employee WHERE dept = 'Eng' ORDER BY salary DESC LIMIT 10 OFFSET 20;
+
+-- Aggregate + GROUP BY + HAVING:
+SELECT dept, COUNT(*) cnt, MAX(salary), AVG(salary)
+FROM employee GROUP BY dept HAVING COUNT(*) > 3;
+-- WHERE = before grouping | HAVING = after grouping
+
+-- Nth highest salary (DENSE_RANK — best approach):
+SELECT name, salary FROM (
+    SELECT name, salary, DENSE_RANK() OVER (ORDER BY salary DESC) rk FROM employee
+) t WHERE rk = N;
+
+-- RANK: 1,1,3 (skips) | DENSE_RANK: 1,1,2 (no skip)</code></pre></div>
+<div class="sec"><h3>JOINs & Set Operations</h3>
+<pre><code>-- INNER JOIN: only matching rows in BOTH tables
+-- LEFT JOIN: all from left + NULLs where no right match
+-- LEFT JOIN + WHERE right.id IS NULL → rows WITHOUT match (find employees without dept)
+-- CROSS JOIN: cartesian product (every combination)
+-- UNION: combine + remove duplicates | UNION ALL: combine + keep duplicates (faster)
+-- INTERSECT: rows in BOTH queries | EXCEPT/MINUS: rows in first NOT in second</code></pre></div>
+<div class="sec"><h3>Indexes, B+Tree & Query Optimization</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>B-Tree vs B+ Tree</div><div class="def">B+ Tree stores data ONLY in leaf nodes (internal nodes = keys only for navigation). Leaves linked as doubly-linked list → perfect for range scans. B-Tree stores data in all nodes — slower range queries. Use B+ Tree for: equality, range queries, ORDER BY.</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>ACID & Isolation Levels</div>
+<table><tr><th>Isolation Level</th><th>Dirty Read</th><th>Non-repeat</th><th>Phantom</th></tr>
+<tr><td>Read Uncommitted</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Read Committed</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Repeatable Read (MySQL default)</td><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><td>Serializable</td><td>No</td><td>No</td><td>No</td></tr></table></div></div></div>`},
+
+// ═══════════════ DAYS 15-16 ═══════════════
+orm_jpa:{label:"Days 15–16 — JPA & ORM",content:()=>`<div class="content"><h2>JPA/Hibernate & ORM</h2><p class="tagline">Days 15–16 · Optimistic Locking · @OneToMany · Lazy/Eager · N+1 · Spring Data JPA · SQL Injection</p>
+<div class="sec"><h3>Optimistic Locking</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>@Version annotation</div><div class="def">Optimistic locking = no DB lock on read, version check at save. Hibernate: UPDATE ... SET salary=?, version=version+1 WHERE id=? AND version=? → 0 rows updated = OptimisticLockException (someone else changed it).</div>
+<pre><code>@Entity public class Employee {
+    @Id Long id; String name; double salary;
+    @Version Integer version;  // never set manually — Hibernate manages this
+}
+// Handle conflict:
+try { employeeService.update(id, newSalary); }
+catch (OptimisticLockException e) { return ResponseEntity.status(409).body("Conflict — retry"); }</code></pre></div></div>
+
+<div class="sec"><h3>JPA Relationships</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>@OneToMany, @ManyToOne, mappedBy</div>
+<pre><code>@Entity public class Department {
+    // INVERSE side — uses mappedBy (no FK here, uses FK in Employee table)
+    @OneToMany(mappedBy="department", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    private List&lt;Employee&gt; employees;
+}
+@Entity public class Employee {
+    // OWNING side — FK column lives here
+    @ManyToOne(fetch=FetchType.LAZY)    // override EAGER default!
+    @JoinColumn(name="department_id")
+    private Department department;
+}</code></pre>
+<div class="warn">@ManyToOne defaults to EAGER — always override to LAZY. mappedBy without @JoinColumn on @OneToMany would create an unnecessary join table!</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>N+1 Problem & Fixes</div>
+<pre><code>// N+1 BUG: 1 query for 100 depts + 100 queries for each dept's employees = 101 queries!
+List&lt;Department&gt; depts = repo.findAll();
+for (Department d : depts) d.getEmployees(); // FIRES N queries here!!
+
+// FIX 1 — JOIN FETCH (1 query):
+@Query("SELECT DISTINCT d FROM Department d LEFT JOIN FETCH d.employees")
+List&lt;Department&gt; findAllWithEmployees();
+
+// FIX 2 — @EntityGraph:
+@EntityGraph(attributePaths={"employees"}) List&lt;Department&gt; findAll();
+
+// FIX 3 — @BatchSize (N/batch queries instead of N):
+@BatchSize(size=20) @OneToMany private List&lt;Employee&gt; employees;</code></pre></div></div>
+
+<div class="sec"><h3>ORM, Spring Data JPA & SQL Injection</h3>
+<pre><code>// Spring Data JPA — auto-generated queries:
+public interface EmployeeRepo extends JpaRepository&lt;Employee, Long&gt; {
+    List&lt;Employee&gt; findByDepartmentName(String name);      // auto from method name
+    @Query("SELECT e FROM Employee e WHERE e.salary > :min") // JPQL
+    List&lt;Employee&gt; findHighEarners(@Param("min") Double min);
+}
+
+// SQL Injection — NEVER concatenate user input:
+// BAD: "SELECT * FROM users WHERE name='" + userInput + "'"
+// GOOD: PreparedStatement with ? params, or JPQL with :namedParams — always parameterized
+
+// @Transactional:
+@Transactional           // opens TX before, commits/rolls back after
+@Transactional(readOnly=true)  // skip dirty checking — faster reads
+// WARNING: only works on public methods via Spring proxy. Calling from SAME class bypasses proxy!</code></pre></div></div>`},
+
+// ═══════════════ DAY 17 ═══════════════
+encryption:{label:"Day 17 — Security",content:()=>`<div class="content"><h2>Security — JWT, OAuth 2.0 & Spring Security</h2><p class="tagline">Day 17 · Encryption · HTTPS/TLS · JWT · OAuth 2.0 · CORS · CSRF · DDoS · Spring Security</p>
+<div class="sec"><h3>Encryption</h3>
+<table><tr><th></th><th>Symmetric (AES)</th><th>Asymmetric (RSA)</th></tr>
+<tr><td>Keys</td><td>One shared secret</td><td>Public + Private key pair</td></tr>
+<tr><td>Encrypt with Public → Decrypt with</td><td>N/A</td><td>PRIVATE key</td></tr>
+<tr><td>Sign with Private → Verify with</td><td>N/A</td><td>PUBLIC key (JWT signing)</td></tr>
+<tr><td>Use case</td><td>Bulk data (fast)</td><td>Key exchange, JWT signing</td></tr></table>
+<div class="note">HTTPS uses BOTH: asymmetric for TLS handshake (safe key exchange), then symmetric AES for actual data transmission.</div></div>
+
+<div class="sec"><h3>JWT & OAuth 2.0</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>JWT structure: header.payload.signature</div>
+<pre><code>// Header: {"alg":"RS256","typ":"JWT"}   → Base64URL encoded
+// Payload: {"sub":"user123","roles":["ADMIN"],"exp":1699003600}  → Base64URL encoded (NOT encrypted!)
+// Signature: RSA_Sign(privateKey, header+"."+payload)  → tamper proof
+
+// VALIDATION: verify signature with auth server's PUBLIC KEY
+// If payload modified → signature mismatch → REJECTED</code></pre>
+<div class="warn">JWT payload is Base64URL encoded — ANYONE can decode and read it. Never put passwords, SSNs, or sensitive PII in JWT payload.</div></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>OAuth 2.0 Authorization Code Flow</div>
+<div class="flow">
+1. User clicks "Login with Google" → browser redirected to Google with client_id + redirect_uri<br>
+2. User logs in & consents at Google<br>
+3. Google redirects back with one-time authorization_code<br>
+4. Frontend sends code to YOUR backend<br>
+5. Backend exchanges code + client_secret for access_token + id_token (client_secret never in browser!)<br>
+6. Backend creates app JWT → returns to frontend for API calls
+</div></div></div>
+
+<div class="sec"><h3>CORS, CSRF & Spring Security</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>CORS vs CSRF — key differences</div><div class="def">CORS = browser policy blocking cross-origin AJAX (unless server allows it). CSRF = malicious site tricks browser into sending authenticated request using your session cookie. JWT Bearer tokens are IMMUNE to CSRF (browsers never auto-send Authorization header).</div></div>
+<pre><code>// Full JWT filter:
+@Component public class JwtAuthFilter extends OncePerRequestFilter {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) {
+        String token = req.getHeader("Authorization").substring(7);  // strip "Bearer "
+        String user = jwtService.extractUsername(token);
+        UserDetails ud = userDetailsService.loadUserByUsername(user);
+        if (jwtService.validateToken(token, ud)) {
+            SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities()));
+        }
+        chain.doFilter(req, res);
+    }
+}
+
+// RBAC — method-level:
+@PreAuthorize("hasRole('ADMIN')")             // check BEFORE method — 403 if false
+@PostAuthorize("returnObject.id == authentication.principal.id") // check AFTER using return value</code></pre></div></div>`},
+
+// ═══════════════ DAY 18 ═══════════════
+cap:{label:"Days 18–19 — Distributed & Kafka",content:()=>`<div class="content"><h2>Distributed Databases & Kafka</h2><p class="tagline">Days 18–19 · CAP · Cassandra · MongoDB · Kafka · CDC · Outbox · SAGA Pattern</p>
+<div class="sec"><h3>CAP Theorem & Replication</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>CAP, BASE, and R+W > RF</div>
+<table><tr><th>CAP choice</th><th>Behavior on partition</th><th>Examples</th></tr>
+<tr><td>CP — Consistency</td><td>Returns error rather than stale data</td><td>HBase, Zookeeper, etcd</td></tr>
+<tr><td>AP — Availability</td><td>Returns possibly stale data (eventual consistency)</td><td>Cassandra, CouchDB, DynamoDB</td></tr></table>
+<div class="flow">
+Quorum: RF=3, W=2, R=2 → W+R=4 > 3=RF → ALWAYS at least 1 overlap node → STRONG consistency<br>
+RF=3, W=1, R=1 → W+R=2, NOT > 3 → possible stale reads (eventual consistency)
+</div></div></div>
+
+<div class="sec"><h3>Cassandra Internals</h3>
+<div class="flow">
+Write: Commit Log (crash recovery) → Memtable (RAM sorted) → SSTable (disk immutable) → Compaction<br>
+Read: Memtable → Bloom Filter per SSTable (skip if "definitely not here") → SSTable index → disk<br>
+Bloom Filter: zero false negatives. If says "NOT here" = guaranteed absent → skip disk IO entirely.
+</div></div>
+
+<div class="sec"><h3>Kafka Core</h3>
+<pre><code>// Kafka concepts:
+Topic = named channel | Partition = ordered append-only log | Offset = position in partition
+Consumer Group: each partition → 1 consumer. Give each app its OWN group = Pub-Sub!
+Partition assignment: partitionIndex = hash(messageKey) % numPartitions → ORDER guaranteed per key
+
+// ACK levels:  0=fire&forget | 1=leader confirms | all=all ISR replicas confirm
+// Delivery: At-Most-Once=commit before process | At-Least-Once=process then commit | Exactly-Once=Kafka TX</code></pre></div>
+
+<div class="sec"><h3>CDC, Outbox Pattern & SAGA</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Outbox Pattern (atomic event publishing)</div>
+<pre><code>BEGIN TRANSACTION
+  INSERT INTO orders (id, amount, status) VALUES (...)  -- business data
+  INSERT INTO outbox (type, payload, status) VALUES (...) -- event record
+COMMIT  -- BOTH committed atomically (ACID local TX)
+-- Separate CDC service (Debezium) reads outbox → publishes to Kafka → marks PUBLISHED</code></pre></div>
+<div class="qa"><div class="q"><span class="qn">Q</span>SAGA Pattern (distributed transactions with compensation)</div>
+<div class="flow">
+Order Service → CREATE order → publish "ORDER_CREATED"<br>
+Payment Service → DEDUCT balance → publish "PAYMENT_DONE"<br>
+Inventory Service → RESERVE stock → FAILS → publish "STOCK_FAILED"<br>
+← Compensation: Payment Service refunds balance | Order Service cancels order
+</div></div></div></div>`},
+
+// ═══════════════ DAYS 20-21 ═══════════════
+microservices:{label:"Days 20–21 — Microservices & AWS",content:()=>`<div class="content"><h2>Microservices & AWS</h2><p class="tagline">Days 20–21 · API Gateway · Circuit Breaker · Discovery · AWS Complete</p>
+<div class="sec"><h3>Microservices Architecture</h3>
+<table><tr><th></th><th>Monolithic</th><th>Microservices</th></tr>
+<tr><td>Pros</td><td>Simple to develop, no network calls, easy debug, 1 deploy</td><td>Independent scale/deploy, fault isolation, team autonomy</td></tr>
+<tr><td>Cons</td><td>Scales as whole unit, one failure = all down, team coupling</td><td>Network latency, distributed TX hard, complex monitoring</td></tr></table>
+<div class="qa"><div class="q"><span class="qn">Q</span>API Gateway + Circuit Breaker</div>
+<div class="flow">
+API Gateway: Client → single entry → validate JWT → log correlation ID → rate limit → route to service<br><br>
+Circuit Breaker states: CLOSED (normal) → failure% > threshold → OPEN (fast-fail fallback) → wait → HALF-OPEN (test) → success → CLOSED
+</div>
+<pre><code>@CircuitBreaker(name="orderService", fallbackMethod="fallback")
+public Order getOrder(Long id) { return orderClient.get(id); }
+public Order fallback(Long id, Exception ex) { return orderCache.getOrDefault(id, defaultOrder); }</code></pre></div></div>
+
+<div class="sec"><h3>AWS — Complete Reference</h3>
+<div class="qa"><div class="q"><span class="qn">Q</span>Core AWS services summary</div>
+<div class="g2"><div class="box blue"><h4>Compute</h4><ul><li>EC2: On-Demand/Reserved/Spot/Scheduled</li><li>Lambda: serverless, max 15min, 1000 concurrent</li><li>Auto Scaling Group: scale EC2 automatically</li><li>ECS/EKS: containers (Docker/Kubernetes)</li></ul></div><div class="box green"><h4>Storage</h4><ul><li>S3: object storage, 11 nines durability, immutable objects</li><li>S3 encryption: SSE-S3 / SSE-KMS / SSE-C</li><li>Glacier: archival. Expedited(1-5min) / Standard(3-5h) / Bulk(5-12h)</li><li>EBS: EC2 persistent block storage</li></ul></div></div>
+<div class="g2"><div class="box amber"><h4>Database</h4><ul><li>RDS: MySQL/PG/Oracle/SQL Server. Multi-AZ = HA failover. Read replicas = scale reads.</li><li>Aurora: 5x faster, 6 copies/3 AZs, 15 replicas, auto-scale storage</li><li>DynamoDB: NoSQL, partition key + sort key primary key, GSI = separate internal table</li><li>ElastiCache: Redis (rich types, persist) / Memcached (simple, multi-thread)</li></ul></div><div class="box purple"><h4>Networking & Security</h4><ul><li>VPC: private network. Public subnet (ALB/NAT). Private subnet (EC2/RDS).</li><li>Security Group: instance-level, stateful (allow only). NACL: subnet-level, stateless (allow+deny).</li><li>IAM Role: temporary creds for services (never use static keys for EC2/Lambda)</li><li>Secret Manager: store + auto-rotate DB creds. CloudTrail: audit ALL API calls.</li></ul></div></div>
+<table><tr><th>Service</th><th>What it does</th></tr>
+<tr><td>Route53</td><td>DNS + health checks + cross-region failover routing</td></tr>
+<tr><td>CloudFront</td><td>CDN — cache at 400+ edge locations worldwide, integrates with S3</td></tr>
+<tr><td>SQS Standard</td><td>At-least-once, best-effort order. FIFO: exactly-once, strict order, 3000 msg/s</td></tr>
+<tr><td>SNS</td><td>Pub-sub fan-out to SQS/Lambda/email/SMS simultaneously</td></tr>
+<tr><td>CloudWatch</td><td>Logs + Metrics + Alerts. X-Ray = distributed tracing. EventBridge = event routing.</td></tr>
+<tr><td>VPN vs Direct Connect</td><td>VPN: encrypted over internet, fast setup. Direct Connect: dedicated fiber, 1-100Gbps, consistent latency</td></tr></table></div></div></div>`},
+
+// ═══════════════ HOMEWORK ═══════════════
+homework:{label:"📋 Homework Tracker",content:()=>`<div class="content"><h2>Homework Assignments</h2>
+<p class="tagline">All 4 homework assignments — tasks, requirements, deadlines, and key notes.</p>
+
+<div class="hw-card" style="border-color:#16a34a;">
+<h3>Homework 2 <span class="hw-badge no-ai">DO NOT use AI</span></h3>
+<p class="hw-deadline">📅 Deadline: Next Thursday 10am EDT (after Day 10-11)</p>
+<div class="hw-task"><div class="hw-num">1</div><div>Use in-memory database (Derby or H2)</div></div>
+<div class="hw-task"><div class="hw-num">2</div><div>
+  Student Many-to-Many Teacher — <strong>do NOT use @ManyToMany annotation</strong><br>
+  <ul class="hw-sub"><li>student entity</li><li>student_teacher entity (junction table)</li><li>teacher entity</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">3</div><div>
+  Endpoints to implement:<br>
+  <ul class="hw-sub"><li>Student CRUD endpoints (GET all, GET by id, POST, PUT, DELETE)</li><li>GET all related teachers by student id endpoint</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">4</div><div>Push SQL CREATE / DDL queries to Git</div></div>
+<div class="hw-task"><div class="hw-num">5</div><div>Code should meet production standard</div></div>
+<div class="danger">⚠️ Do NOT let Hibernate create tables for you! Set <span class="ic">spring.jpa.hibernate.ddl-auto=none</span> and write all CREATE TABLE SQL manually.</div>
+<pre><code>-- Example DDL to push to Git:
+CREATE TABLE student (
+    id      BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(100) NOT NULL,
+    email   VARCHAR(150) UNIQUE NOT NULL,
+    version INT DEFAULT 0
+);
+CREATE TABLE teacher (
+    id      BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(100) NOT NULL,
+    subject VARCHAR(100)
+);
+CREATE TABLE student_teacher (
+    student_id BIGINT NOT NULL,
+    teacher_id BIGINT NOT NULL,
+    PRIMARY KEY (student_id, teacher_id),
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES teacher(id) ON DELETE CASCADE
+);</code></pre></div>
+
+<div class="hw-card" style="border-color:#2563eb;">
+<h3>Homework 3.1 <span class="hw-badge ai">USE AI</span></h3>
+<p class="hw-deadline">📅 Deadline: Next Thursday 10am EDT (after Day 17)</p>
+<div class="hw-task"><div class="hw-num">1</div><div>Add Spring Security to Homework 1</div></div>
+<div class="hw-task"><div class="hw-num">2</div><div>Save username and password in H2 database</div></div>
+<div class="hw-task"><div class="hw-num">3</div><div>Write <span class="ic">UserDetails</span> and <span class="ic">UserDetailsService</span> implementations</div></div>
+<div class="hw-task"><div class="hw-num">4</div><div>
+  Create JWT filter to validate JWT tokens<br>
+  <ul class="hw-sub"><li>Save login identity into SecurityContext</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">5</div><div>Use <span class="ic">@PreAuthorize</span> on top of at least one endpoint</div></div>
+<div class="hw-task"><div class="hw-num">6</div><div>Do NOT use Spring Security's built-in login — create custom <span class="ic">/auth/login</span> endpoint</div></div>
+<pre><code>// Required components:
+// 1. User entity implementing UserDetails
+// 2. UserRepository (Spring Data JPA)
+// 3. CustomUserDetailsService implements UserDetailsService
+// 4. JwtService (generate + validate tokens)
+// 5. JwtAuthFilter extends OncePerRequestFilter
+// 6. SecurityConfig (@Configuration) — disable CSRF, stateless session, add filter
+// 7. AuthController with POST /auth/login endpoint
+// 8. BCryptPasswordEncoder bean for password hashing
+
+// /auth/login flow:
+// POST /auth/login {username, password}
+// → AuthenticationManager.authenticate() → UserDetailsService.loadUserByUsername()
+// → BCrypt verify password → generate JWT → return {token}</code></pre></div>
+
+<div class="hw-card" style="border-color:#7c3aed;">
+<h3>Homework 3.2 <span class="hw-badge ai">USE AI</span></h3>
+<p class="hw-deadline">📅 Deadline: Next Thursday 10am EDT — take screenshots → PDF → push to GitHub</p>
+<div class="hw-task"><div class="hw-num">1</div><div>Use ChatGPT/AI to generate alarm data in CSV format</div></div>
+<div class="hw-task"><div class="hw-num">2</div><div>Use Isolation Forest model to train on alarm data → identify false alarms</div></div>
+<div class="hw-task"><div class="hw-num">3</div><div>Save/dump the trained model to a local file</div></div>
+<div class="hw-task"><div class="hw-num">4</div><div>Create an AWS free-tier account</div></div>
+<div class="hw-task"><div class="hw-num">5</div><div>
+  Create API Gateway (POST method, /verify, pass data through request body) → linked with AWS Lambda
+</div></div>
+<div class="hw-task"><div class="hw-num">6</div><div>Use Lambda SAM as local Lambda development tool for testing</div></div>
+<div class="hw-task"><div class="hw-num">7</div><div>Upload the trained model to AWS S3</div></div>
+<div class="hw-task"><div class="hw-num">8</div><div>Set up required libraries in Lambda Layer</div></div>
+<div class="hw-task"><div class="hw-num">9</div><div>Lambda loads model from S3 → serves prediction result through API Gateway</div></div>
+<div class="hw-task"><div class="hw-num">10</div><div>Test the API through Postman</div></div>
+<div class="note">📸 Take screenshots of all services and setup → put them in a PDF → push PDF + code to GitHub.</div>
+<pre><code># Architecture flow for 3.2:
+Postman → POST /verify → API Gateway → Lambda Function
+Lambda on cold start: load model from S3 → cache in memory
+Lambda on request: receive alarm data → run model.predict() → return {isAnomaly: true/false}
+
+# Lambda SAM local testing:
+sam local invoke "PredictFunction" --event event.json
+sam local start-api  # local API Gateway simulation</code></pre></div>
+
+<div class="hw-card" style="border-color:#ef4444;">
+<h3>Homework 4 <span class="hw-badge ai">USE AI</span></h3>
+<p class="hw-deadline">📅 Deadline: May 26, 10am EDT — screenshots → PDF → push code + PDF to GitHub</p>
+<div class="hw-task"><div class="hw-num">1</div><div>
+  <strong>Terraform infrastructure deployment (API Gateway + Lambda)</strong>
+  <ul class="hw-sub"><li>main.tf · variables.tf · outputs.tf</li><li>Use modules and create different folders per component</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">2</div><div>Add <strong>AWS Cognito</strong> to your infrastructure (Terraform-managed)</div></div>
+<div class="hw-task"><div class="hw-num">3</div><div>
+  <strong>EC2 to host Spring Boot file upload service</strong>
+  <ul class="hw-sub"><li>Architecture: API Gateway → Private VPC Link → VPC [ALB → EC2]</li><li>Setup VPC, subnet, configure NACL on subnet, Security Group on EC2</li><li>Spring Boot app: use AWS SDK dependencies, connect to S3, generate pre-signed URL → return to user</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">4</div><div>
+  <strong>Data pipeline with S3 trigger → Step Function</strong>
+  <ul class="hw-sub"><li>Use ChatGPT to generate CSV sensor data → upload to S3 using pre-signed URL</li><li>Setup S3 trigger → triggers AWS Step Function workflow</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">5</div><div>
+  <strong>AWS Glue ETL</strong>
+  <ul class="hw-sub"><li>Create Glue workflow with catalog + S3 data source</li><li>Job 1: load CSV from S3 + clean it → save back to S3 → pass filename to next job</li><li>Job 2: load cleaned CSV → convert to Parquet format</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">6</div><div>
+  <strong>Step Function orchestration</strong>
+  <ul class="hw-sub"><li>After Glue workflow finishes → Step Function triggers SageMaker training</li><li>SageMaker reads CSV → trains model → uploads model to S3</li></ul>
+</div></div>
+<div class="hw-task"><div class="hw-num">7</div><div>Serve the trained model through a <strong>SageMaker endpoint</strong></div></div>
+<pre><code># Homework 4 full architecture:
+User → POST /upload → API Gateway → VPC Link → ALB → EC2 (Spring Boot)
+  EC2 → S3: generate pre-signed URL → return to user
+  User → uploads CSV directly to S3 using pre-signed URL
+  S3 event trigger → Step Function starts
+  Step Function → Glue Workflow (clean CSV → convert to Parquet)
+  Step Function → SageMaker Training Job (train model)
+  SageMaker → save model to S3
+  SageMaker Endpoint → serve model predictions
+
+# Terraform folder structure:
+/terraform
+  /modules
+    /api-gateway/  → main.tf variables.tf outputs.tf
+    /lambda/       → main.tf variables.tf outputs.tf
+    /cognito/      → main.tf variables.tf outputs.tf
+    /vpc/          → main.tf variables.tf outputs.tf
+    /ec2/          → main.tf variables.tf outputs.tf
+  main.tf          → calls all modules
+  variables.tf     → global variables
+  outputs.tf       → outputs</code></pre>
+<div class="note">📸 Take AWS screenshots of every service setup → compile into a PDF → push both the code (Terraform + Spring Boot) AND the PDF to your GitHub repository.</div></div>
+
+<div class="hw-card" style="background:#f0fdf4;border-color:#22c55e;">
+<h3>Homework Checklist</h3>
+<div class="exp">
+<table><tr><th>HW</th><th>Key Tech</th><th>AI Allowed?</th><th>Deliverable</th></tr>
+<tr><td><strong>HW 2</strong></td><td>Spring Boot, H2, JPA, Many-to-Many (manual), DDL</td><td>❌ NO AI</td><td>Code + DDL SQL in Git</td></tr>
+<tr><td><strong>HW 3.1</strong></td><td>Spring Security, JWT, UserDetails, @PreAuthorize</td><td>✅ AI OK</td><td>Working Spring Boot app in Git</td></tr>
+<tr><td><strong>HW 3.2</strong></td><td>Python ML (Isolation Forest), AWS Lambda, API Gateway, S3</td><td>✅ AI OK</td><td>Code + PDF screenshots in Git</td></tr>
+<tr><td><strong>HW 4</strong></td><td>Terraform, AWS Cognito, EC2/ALB/VPC, Glue, Step Functions, SageMaker</td><td>✅ AI OK</td><td>Code + PDF screenshots in Git</td></tr></table>
+</div></div></div>`}
+};
+
+const MENU=[
+  {day:"Overview",items:[{id:"home",l:"🏠 Home — All Topics"}]},
+  {day:"Days 1–4 — Core Java",items:[
+    {id:"oop",l:"Day 1 — OOP Fundamentals"},
+    {id:"collections",l:"Day 2 — Collections & Generics"},
+    {id:"streams",l:"Day 3 — Streams & Modern Java"},
+    {id:"threading",l:"Day 4 — Threading & Concurrency",isNew:true},
+  ]},
+  {day:"Days 5–6 — JVM & Patterns",items:[
+    {id:"jvm",l:"Days 5–6 — JVM, GC & Design Patterns"},
+  ]},
+  {day:"Days 7–9 — Spring",items:[
+    {id:"spring",l:"Days 7–9 — Spring & REST API"},
+  ]},
+  {day:"Days 10–11 — Advanced Java",items:[
+    {id:"reflection",l:"Days 10–11 — Reflection & Concurrency"},
+  ]},
+  {day:"Days 12–14 — SQL",items:[
+    {id:"sql_basics",l:"Days 12–14 — SQL & Optimization"},
+  ]},
+  {day:"Days 15–16 — JPA/ORM",items:[
+    {id:"orm_jpa",l:"Days 15–16 — JPA/Hibernate & ORM"},
+  ]},
+  {day:"Day 17 — Security",items:[
+    {id:"encryption",l:"Day 17 — Security & Spring Security"},
+  ]},
+  {day:"Days 18–19 — Distributed",items:[
+    {id:"cap",l:"Days 18–19 — CAP, Kafka & Patterns"},
+  ]},
+  {day:"Days 20–21 — Cloud",items:[
+    {id:"microservices",l:"Days 20–21 — Microservices & AWS"},
+  ]},
+  {day:"📋 Assignments",items:[
+    {id:"homework",l:"Homework 1–4 Tracker",isHw:true},
+  ]},
+];
+
+let cur='home';
+function go(id){cur=id;paint();document.getElementById('main').scrollTo(0,0);}
+
+function paint(){
+  let sb='';
+  for(const s of MENU){
+    sb+=`<div class="day-lbl">${s.day}</div>`;
+    for(const i of s.items){
+      let cls=`tbtn${cur===i.id?' active':''}${i.isHw?' hw':''}${i.isNew?' new-badge':''}`;
+      sb+=`<button class="${cls}" onclick="go('${i.id}')">${i.l}</button>`;
+    }
+  }
+  document.getElementById('sb').innerHTML=`<div class="sb-head"><h1>Java Training</h1><p>Days 1–21 · All Topics + Homework</p></div>${sb}`;
+  const t=D[cur]||D.home;
+  document.getElementById('main').innerHTML=t.content();
+}
+paint();
+</script>
+</body>
+</html>
