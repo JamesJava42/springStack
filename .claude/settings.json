@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(start \"c:\\\\Users\\\\rakes\\\\OneDrive\\\\Desktop\\\\java-guide\\\\index.html.html\")"
+      "Bash(start \"c:\\\\Users\\\\rakes\\\\OneDrive\\\\Desktop\\\\java-guide\\\\index.html.html\")",
+      "Bash(node -e ' *)"
     ]
   }
 }
